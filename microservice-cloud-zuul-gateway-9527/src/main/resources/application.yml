@@ -1,0 +1,29 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: microservice-cloud-zuul-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+  instance:
+    instance-id: gateway-9527.com
+    prefer-ip-address: true
+
+zuul:
+  # 设置统一公共前缀
+  prefix: /fatehole
+  # 将服务名进行虚拟化（起假名）
+  routes:
+    mydept.serviceId: microservice-cloud-dept
+    mydept.path: /mydept/**
+  # 使原服务名无法访问
+  ignored-services: microservice-cloud-dept     # 可以使用"*"将所有服务名禁用
+
+info:
+  app.name: fatehole-microservice-cloud
+  company.name: www.fatehole.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
